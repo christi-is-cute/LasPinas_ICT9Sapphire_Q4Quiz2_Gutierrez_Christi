@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Score Analyzer</title>
+
+	<style>
+    body {
+      background: lightpink;
+      font-family: 'Poppins', sans-serif;
+      color: #ff4da6;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: cursive;
+      font-size: 4em;
+      color: #ff69b4;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #ff1493;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 30px;
+      box-shadow: 0 8px 30px rgba(255, 105, 180, 0.2);
+      padding: 30px;
+      max-width: 500px;
+      margin: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .form-control {
+      border: none;
+      border-radius: 20px;
+      padding: 12px;
+      box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+      margin-bottom: 20px;
+    }
+
+    .btn-rating {
+      background: linear-gradient(90deg, #ff69b4, #ff85b3);
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 1.2em;
+      box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-rating:hover {
+      background: linear-gradient(90deg, #ff85b3, #ffb6c1);
+      transform: scale(1.05);
+    }
+
+    .result {
+      font-size: 1.4em;
+      color: #d63384;
+      margin-top: 20px;
+    }
+
+    .instructions {
+      display: none;
+      color: #ff4da6;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #ff69b4;
+    }
+
+    a {
+      color: #e75480;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Score Analyzer</h1>
+  <p>Enter your grades below and find out your rating</p>
+
+  <br>
+  <br>
+
+<div class="card mt-4">
+  <input type="number" id="english" class="form-control" placeholder="English Grade">
+  <input type="number" id="science" class="form-control" placeholder="Science Grade">
+  <input type="number" id="math" class="form-control" placeholder="Math Grade">
+  
+  <div style="margin-top: 20px;">
+    <button onclick="computeRating()" class="btn btn-rating">Get Rating</button>
+  </div>
+
+  <div id="output" class="result"></div>
+</div>
+
+  <script>
+    function computeRating() {
+      const eng = parseFloat(document.getElementById('english').value);
+      const sci = parseFloat(document.getElementById('science').value);
+      const math = parseFloat(document.getElementById('math').value);
+
+      const avg = Math.round((eng + sci + math) / 3 * 100) / 100;
+      let level = 0;
+
+      switch (true) {
+        case avg >= 94 && avg <= 100:
+          level = 1;
+          break;
+        case avg >= 87 && avg < 94:
+          level = 2;
+          break;
+        case avg >= 80 && avg < 87:
+          level = 3;
+          break;
+        case avg >= 75 && avg < 80:
+          level = 4;
+          break;
+        case avg >= 70 && avg < 75:
+          level = 5;
+          break;
+        default:
+          level = 6;
+      }
+
+      let rating;
+      switch (level) {
+        case 1:
+          rating = "Excellent!";
+          break;
+        case 2:
+          rating = "Above Satisfactory!";
+          break;
+        case 3:
+          rating = "Satisfactory!";
+          break;
+        case 4:
+          rating = "Needs Improvement";
+          break;
+        case 5:
+          rating = "Poor";
+          break;
+        default:
+          rating = "Please check your grades again.";
+      }
+
+      document.getElementById('output').innerHTML =
+        `Your Average: <strong>${avg}</strong><br>Rating: <strong>${rating}</strong>`;
+    }
+  </script>
+
+</body>
+</html>
